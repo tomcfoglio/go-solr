@@ -62,6 +62,13 @@ func (q *Query) AddFacet(f string) {
 	q.params.Add("facet.field", f)
 }
 
+// f (Facet) https://cwiki.apache.org/confluence/display/solr/Faceting#Faceting-Thefacet.fieldParameter
+// Example: category
+func (q *Query) AddFacetQuery(fq string) {
+	q.params.Set("facet", "true")
+	q.params.Add("facet.query", fq)
+}
+
 // mc (Facet min count) https://cwiki.apache.org/confluence/display/solr/Faceting#Faceting-Thefacet.mincountParameter
 // Example: 5
 func (q *Query) SetFacetMinCount(mc int) {
