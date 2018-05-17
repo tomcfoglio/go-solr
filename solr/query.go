@@ -135,6 +135,7 @@ func (q *Query) Rows(rows int) {
 
 // f (Facet) https://lucene.apache.org/solr/guide/7_3/blockjoin-faceting.html
 func (q *Query) AddChildFacet(f string) {
+	q.params.Set("facet", "true")
 	q.params.Add("child.facet.field", f)
 }
 
