@@ -192,30 +192,11 @@ func (parser *StandardResultParser) Parse(resp_ *[]byte) (*SolrResult, error) {
 			return nil, err
 		}
 
-		err = parser.ParseFacetCounts(response, sr)
-		if err != nil {
-			return nil, err
-		}
-
-		err = parser.ParseHighlighting(response, sr)
-		if err != nil {
-			return nil, err
-		}
-
-		err = parser.ParseStats(response, sr)
-		if err != nil {
-			return nil, err
-		}
-
-		err = parser.ParseMoreLikeThis(response, sr)
-		if err != nil {
-			return nil, err
-		}
-
-		err = parser.ParseSpellCheck(response, sr)
-		if err != nil {
-			return nil, err
-		}
+		parser.ParseFacetCounts(response, sr)
+		parser.ParseHighlighting(response, sr)
+		parser.ParseStats(response, sr)
+		parser.ParseMoreLikeThis(response, sr)
+		parser.ParseSpellCheck(response, sr)
 	} else {
 		err := parser.ParseError(response, sr)
 		if err != nil {
@@ -259,7 +240,7 @@ func ParseDocResponse(docResponse map[string]interface{}, collection *Collection
 		}
 	}
 
-	return fmt.Errorf("ParseDocResponse - type casting error")
+	return nil
 }
 
 // ParseSolrResponse will assign result and build sr.docs if there is a response.
