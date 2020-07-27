@@ -32,7 +32,7 @@ func (ca *CollectionsAdmin) SetBasicAuth(username, password string) {
 // Get - Method for making GET-request to any relative path to /admin/collections
 func (ca *CollectionsAdmin) Get(params *url.Values) (*SolrResponse, error) {
 	params.Set("wt", "json")
-	r, err := HTTPGet(fmt.Sprintf("%s/admin/collections?%s", ca.url.String(), params.Encode()), nil, ca.username, ca.password)
+	r, err := HTTPGet(httpClient, fmt.Sprintf("%s/admin/collections?%s", ca.url.String(), params.Encode()), nil, ca.username, ca.password)
 	if err != nil {
 		return nil, err
 	}
