@@ -7,7 +7,7 @@ import (
 
 func TestCollectionsAdminWrongAction(t *testing.T) {
 
-	ca, _ := NewCollectionsAdmin("http://127.0.0.1:12345/solr")
+	ca, _ := NewCollectionsAdmin("http://127.0.0.1:12345/solr", httpClient)
 
 	params := &url.Values{}
 	params.Add("core", "core0")
@@ -22,7 +22,7 @@ func TestCollectionsAdminWrongAction(t *testing.T) {
 }
 
 func TestCollectionsAdminInvalidUrl(t *testing.T) {
-	_, err := NewCollectionsAdmin("sdff")
+	_, err := NewCollectionsAdmin("sdff", httpClient)
 	if err == nil {
 		t.Errorf("Expected an error")
 		return
