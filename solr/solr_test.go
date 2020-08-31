@@ -1,23 +1,30 @@
 package solr
 
 import (
-	"crypto/tls"
 	"fmt"
-	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/uol/funks"
+	"github.com/uol/restrictedhttpclient"
 )
 
-var transportCore = &http.Transport{
-	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-}
+var httpClient = createHTTPClient()
 
-var httpClient = &http.Client{
-	Transport: transportCore,
-	Timeout:   time.Minute,
+func createHTTPClient() *restrictedhttpclient.Instance {
+	instance, err := restrictedhttpclient.New(&restrictedhttpclient.Configuration{
+		MaxSimultaneousRequests:   10,
+		RequestTimeout:            *funks.ForceNewStringDuration("1m"),
+		SkipCertificateValidation: true,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return instance
 }
 
 func TestMain(m *testing.M) {
